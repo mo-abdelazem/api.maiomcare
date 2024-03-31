@@ -7,19 +7,27 @@ const {
   deleteValidation,
 } = require("../middlewares/validations/childValidation");
 const validatonResult = require("../middlewares/validations/resultValidation");
+const authmw = require("../middlewares/authmw");
+
 const router = express.Router();
 
 router
   .route("/children")
+  .all(authmw.isAdmin)
   .get(controller.getAllChildrens)
   .post(postValidation, validatonResult, controller.insertChild)
   .put(putValidation, validatonResult, controller.updateChild);
 
 router
   .route("/children/:id")
-  .get(idValidation, validatonResult, controller.getChildById);
+  .get(authmw.isAdmin, idValidation, validatonResult, controller.getChildById);
 router
   .route("/children")
-  .delete(deleteValidation, validatonResult, controller.deleteChild);
+  .delete(
+    authmw.isAdmin,
+    deleteValidation,
+    validatonResult,
+    controller.deleteChild
+  );
 
 module.exports = router;

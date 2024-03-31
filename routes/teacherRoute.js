@@ -13,18 +13,34 @@ const router = express.Router();
 router
   .route("/teachers")
   .get(authmw, controller.getAllTeachers)
-  .post(authmw, postValidation, validatonResult, controller.insertTeacher)
-  .put(putValidation, validatonResult, controller.updateTeacher);
+  .post(
+    authmw.isAdminOrSupervisor,
+    postValidation,
+    validatonResult,
+    controller.insertTeacher
+  )
+  .put(
+    authmw.isAdminOrSupervisor,
+    putValidation,
+    validatonResult,
+    controller.updateTeacher
+  );
 
 router.route("/teachers/supervisors").get(controller.getTeacherSupervisors);
 router.get(
   "/teachers/:id",
+  authmw,
   idValidation,
   validatonResult,
   controller.getTeacherById
 );
 router
   .route("/teachers")
-  .delete(deleteValidation, validatonResult, controller.deleteTeacher);
+  .delete(
+    authmw.isAdminOrSupervisor,
+    deleteValidation,
+    validatonResult,
+    controller.deleteTeacher
+  );
 
 module.exports = router;

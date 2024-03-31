@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
 const Class = require("../models/classModel");
 
 module.exports = (req, res, next) => {
