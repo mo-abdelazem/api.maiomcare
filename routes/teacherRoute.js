@@ -1,11 +1,14 @@
 const express = require("express");
 const controller = require("../controllers/teacherController");
 const authmw = require("../middlewares/authmw");
+const upload = require("../middlewares/uploadmw_image");
+
 const {
   postValidation,
   putValidation,
   idValidation,
   deleteValidation,
+  changePassword,
 } = require("../middlewares/validations/teacherValidation");
 const validatonResult = require("../middlewares/validations/resultValidation");
 const router = express.Router();
@@ -14,6 +17,7 @@ router
   .route("/teachers")
   .get(authmw, controller.getAllTeachers)
   .post(
+    upload.uploadPhoto,
     authmw.isAdminOrSupervisor,
     postValidation,
     validatonResult,
@@ -42,5 +46,12 @@ router
     validatonResult,
     controller.deleteTeacher
   );
-
+router
+  .route("/teachers/:id/change-password")
+  .put(
+    authmw.isAdminOrSupervisor,
+    changePassword,
+    validatonResult,
+    controller.updateTeacher
+  );
 module.exports = router;

@@ -32,13 +32,13 @@ exports.saveImage = (folder, data, req, res, next) => {
     }
 
     fs.writeFile(
-      path.join(folderPath, `${data._id}.${extension(req)}`),
+      `public/images/${folder}/${data._id}.${extension(req)}`,
       req.file.buffer,
       (err) => {
         if (err) {
-          return next(err);
+          return next(Error("Can't save your photo"));
         } else {
-          next();
+          res.status(200).json(data);
         }
       }
     );

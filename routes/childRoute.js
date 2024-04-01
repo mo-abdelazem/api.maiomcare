@@ -8,6 +8,7 @@ const {
 } = require("../middlewares/validations/childValidation");
 const validatonResult = require("../middlewares/validations/resultValidation");
 const authmw = require("../middlewares/authmw");
+const upload = require("../middlewares/uploadmw_image");
 
 const router = express.Router();
 
@@ -15,7 +16,12 @@ router
   .route("/children")
   .all(authmw.isAdmin)
   .get(controller.getAllChildrens)
-  .post(postValidation, validatonResult, controller.insertChild)
+  .post(
+    upload.uploadPhoto,
+    postValidation,
+    validatonResult,
+    controller.insertChild
+  )
   .put(putValidation, validatonResult, controller.updateChild);
 
 router

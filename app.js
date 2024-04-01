@@ -8,6 +8,8 @@ const teacherRoute = require("./routes/teacherRoute");
 const childRoute = require("./routes/childRoute");
 const classRoute = require("./routes/classRouter");
 const server = express();
+import swaggerDocs from "./swagger.js";
+
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8080;
@@ -20,6 +22,7 @@ mongoose
     server.listen(PORT, () => {
       console.log("I am listening..........", PORT);
     });
+    swaggerDocs(express, PORT);
   })
   .catch((error) => {
     console.log("DB Problem ..." + error);

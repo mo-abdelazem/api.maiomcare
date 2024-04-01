@@ -14,7 +14,7 @@ const schema = new mongoose.Schema({
     enum: ["teacher", "supervisor", "admin"],
     default: "teacher",
   },
-  image: String,
+  image: { type: String, required: false },
 });
 
 module.exports = mongoose.model("Teacher", schema);

@@ -19,5 +19,17 @@ exports.putValidation = [
   body("image").optional().isString().withMessage("image should be string"),
 ];
 
+exports.changePassword = [
+  body("email").isEmail().withMessage("not a valid email"),
+  body("password")
+    .optional()
+    .isString()
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters"),
+  body("newPassword")
+    .isString()
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters"),
+];
 exports.deleteValidation = [body("_id").isMongoId().withMessage("Invalid id")];
 exports.idValidation = [param("id").isMongoId().withMessage("Invalid id")];

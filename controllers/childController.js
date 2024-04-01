@@ -26,6 +26,7 @@ exports.insertChild = (req, res, next) => {
     .save()
     .then((data) => {
       res.status(200).json(data);
+      image.saveImage("child", data, request, response, next);
     })
     .catch((error) => next(error));
 };
